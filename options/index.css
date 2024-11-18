@@ -1,0 +1,17 @@
+html {
+    display: flex;
+    flex-direction: column;
+    background-color: #2C2C2C;
+    padding: 20px;
+}
+
+#main {
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
