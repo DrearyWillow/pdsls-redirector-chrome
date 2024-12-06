@@ -1,17 +1,18 @@
 window.onload = async () => {
   const alwaysOpenCheckbox = document.getElementById('always-open')
-  const redirectCheckbox = document.getElementById('redirect-or-new')
   const pdsFallbackCheckbox = document.getElementById('pds-fallback')
-  const pdslsOpensJSONCheckbox = document.getElementById('pdsls-xrpc')
-  const jsonModeCheckbox = document.getElementById('json-mode')
+  const redirectCheckbox = document.getElementById('redirect-or-new')
+  const pdslsOpensApiCheckbox = document.getElementById('pdsls-opens-api')
+  const alwaysApiCheckbox = document.getElementById('always-api')
+  const getPostThreadCheckbox = document.getElementById('get-post-thread')
   const replyCountSpinner = document.getElementById('reply-count')
   const parentCountSpinner = document.getElementById('parent-count')
-  const jsonAdvanced = document.querySelector('.json-advanced')
-  const saveButton = document.querySelector('.save-settings')
-  const resetButton = document.querySelector('.reset-defaults')
+  const getPostThreadParams = document.querySelector('.get-post-thread-params')
+  const saveButton = document.querySelector('.save-button')
+  const resetButton = document.querySelector('.reset-button')
 
-  jsonModeCheckbox.addEventListener('change', (event) => {
-    jsonAdvanced.style.display = event.target.checked ? 'block' : 'none'
+  getPostThreadCheckbox.addEventListener('change', (event) => {
+    getPostThreadParams.style.display = event.target.checked ? 'block' : 'none'
   })
 
   replyCountSpinner.addEventListener('input', () => {
@@ -37,11 +38,13 @@ window.onload = async () => {
     alwaysOpen: true,
     openInNewTab: true,
     pdsFallback: true,
-    pdslsOpensJSON: true,
-    jsonMode: false,
+    pdslsOpensApi: true,
+    alwaysApi: false,
+    getPostThread: false,
     replyCount: 0,
     parentCount: 0,
   }
+
   // Load settings from storage and apply them to the form
   try {
     const data = await chrome.storage.sync.get(Object.keys(defaults))
@@ -49,8 +52,9 @@ window.onload = async () => {
     alwaysOpenCheckbox.checked = data.alwaysOpen ?? defaults.alwaysOpen
     redirectCheckbox.checked = data.openInNewTab ?? defaults.openInNewTab
     pdsFallbackCheckbox.checked = data.pdsFallback ?? defaults.pdsFallback
-    pdslsOpensJSONCheckbox.checked = data.pdslsOpensJSON ?? defaults.pdslsOpensJSON
-    jsonModeCheckbox.checked = data.jsonMode ?? defaults.jsonMode
+    alwaysApiCheckbox.checked = data.alwaysApi ?? defaults.alwaysApi
+    pdslsOpensApiCheckbox.checked = data.pdslsOpensApi ?? defaults.pdslsOpensApi
+    getPostThreadCheckbox.checked = data.getPostThread ?? defaults.getPostThread
     replyCountSpinner.value = data.replyCount ?? defaults.replyCount
     parentCountSpinner.value = data.parentCount ?? defaults.parentCount
   } catch (error) {
@@ -63,8 +67,9 @@ window.onload = async () => {
       alwaysOpen: alwaysOpenCheckbox.checked,
       openInNewTab: redirectCheckbox.checked,
       pdsFallback: pdsFallbackCheckbox.checked,
-      pdslsOpensJSON: pdslsOpensJSONCheckbox.checked,
-      jsonMode: jsonModeCheckbox.checked,
+      alwaysApi: alwaysApiCheckbox.checked,
+      pdslsOpensApi: pdslsOpensApiCheckbox.checked,
+      getPostThread: getPostThreadCheckbox.checked,
       replyCount: replyCountSpinner.value,
       parentCount: parentCountSpinner.value
     }, () => {
@@ -78,14 +83,15 @@ window.onload = async () => {
       alwaysOpenCheckbox.checked = defaults.alwaysOpen
       redirectCheckbox.checked = defaults.openInNewTab
       pdsFallbackCheckbox.checked = defaults.pdsFallback
-      pdslsOpensJSONCheckbox.checked = defaults.pdslsOpensJSON
-      jsonModeCheckbox.checked = defaults.jsonMode
+      alwaysApiCheckbox.checked = defaults.alwaysApi
+      pdslsOpensApiCheckbox.checked = defaults.pdslsOpensApi
+      getPostThreadCheckbox.checked = defaults.getPostThread
       replyCountSpinner.value = defaults.replyCount
       parentCountSpinner.value = defaults.parentCount
-      jsonAdvanced.style.display = jsonModeCheckbox.checked ? 'block' : 'none'
+      getPostThreadParams.style.display = getPostThreadCheckbox.checked ? 'block' : 'none'
       console.log('Settings reset to defaults')
     })
   })
 
-  jsonAdvanced.style.display = jsonModeCheckbox.checked ? 'block' : 'none'
+  getPostThreadParams.style.display = getPostThreadCheckbox.checked ? 'block' : 'none'
 }
