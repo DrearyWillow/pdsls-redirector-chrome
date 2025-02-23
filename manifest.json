@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
   "name": "PDSls Redirector",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Open the PDSls page corresponding to an ATProto compatible website.",
   "permissions": [
     "tabs",
     "contextMenus",
     "activeTab",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "background": {
     "service_worker": "background.js"
@@ -34,9 +35,19 @@
         "default": "Ctrl+Shift+1"
       },
       "description": "Open a new PDSls tab"
+    },
+    "at-uri-copy": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2"
+      },
+      "description": "Copy an AT-URI"
     }
   },
   "options_ui": {
     "page": "options/index.html"
-  }
+  },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
 }

@@ -7,6 +7,7 @@ window.onload = async () => {
   const getPostThreadCheckbox = document.getElementById('get-post-thread')
   const replyCountSpinner = document.getElementById('reply-count')
   const parentCountSpinner = document.getElementById('parent-count')
+  const enableCopyUriCheckbox = document.getElementById('enable-copy-uri')
   const getPostThreadParams = document.querySelector('.get-post-thread-params')
   const saveButton = document.querySelector('.save-button')
   const resetButton = document.querySelector('.reset-button')
@@ -41,6 +42,7 @@ window.onload = async () => {
     pdslsOpensApi: false,
     alwaysApi: false,
     getPostThread: false,
+    copyUriEnabled: false,
     replyCount: 0,
     parentCount: 0,
   }
@@ -57,6 +59,7 @@ window.onload = async () => {
     getPostThreadCheckbox.checked = data.getPostThread ?? defaults.getPostThread
     replyCountSpinner.value = data.replyCount ?? defaults.replyCount
     parentCountSpinner.value = data.parentCount ?? defaults.parentCount
+    enableCopyUriCheckbox.checked = data.copyUriEnabled ?? defaults.copyUriEnabled
   } catch (error) {
     console.error('Error retrieving settings:', error)
   }
@@ -71,7 +74,8 @@ window.onload = async () => {
       pdslsOpensApi: pdslsOpensApiCheckbox.checked,
       getPostThread: getPostThreadCheckbox.checked,
       replyCount: replyCountSpinner.value,
-      parentCount: parentCountSpinner.value
+      parentCount: parentCountSpinner.value,
+      copyUriEnabled: enableCopyUriCheckbox.checked
     }, () => {
       console.log('Settings saved')
     })
@@ -86,6 +90,7 @@ window.onload = async () => {
       alwaysApiCheckbox.checked = defaults.alwaysApi
       pdslsOpensApiCheckbox.checked = defaults.pdslsOpensApi
       getPostThreadCheckbox.checked = defaults.getPostThread
+      enableCopyUriCheckbox.checked = defaults.copyUriEnabled
       replyCountSpinner.value = defaults.replyCount
       parentCountSpinner.value = defaults.parentCount
       getPostThreadParams.style.display = getPostThreadCheckbox.checked ? 'block' : 'none'
