@@ -9,6 +9,7 @@ window.onload = async () => {
   const parentCountSpinner = document.getElementById('parent-count')
   const enableCopyUriCheckbox = document.getElementById('enable-copy-uri')
   const getPostThreadParams = document.querySelector('.get-post-thread-params')
+  const enableJetstreamCheckbox = document.getElementById('enable-jetstream')
   const saveButton = document.querySelector('.save-button')
   const resetButton = document.querySelector('.reset-button')
 
@@ -43,6 +44,7 @@ window.onload = async () => {
     alwaysApi: false,
     getPostThread: false,
     copyUriEnabled: false,
+    jetstreamEnabled: false,
     replyCount: 0,
     parentCount: 0,
   }
@@ -60,6 +62,7 @@ window.onload = async () => {
     replyCountSpinner.value = data.replyCount ?? defaults.replyCount
     parentCountSpinner.value = data.parentCount ?? defaults.parentCount
     enableCopyUriCheckbox.checked = data.copyUriEnabled ?? defaults.copyUriEnabled
+    enableJetstreamCheckbox.checked = data.jetstreamEnabled ?? defaults.jetstreamEnabled
   } catch (error) {
     console.error('Error retrieving settings:', error)
   }
@@ -75,7 +78,8 @@ window.onload = async () => {
       getPostThread: getPostThreadCheckbox.checked,
       replyCount: replyCountSpinner.value,
       parentCount: parentCountSpinner.value,
-      copyUriEnabled: enableCopyUriCheckbox.checked
+      copyUriEnabled: enableCopyUriCheckbox.checked,
+      jetstreamEnabled: enableJetstreamCheckbox.checked
     }, () => {
       console.log('Settings saved')
     })
@@ -93,6 +97,7 @@ window.onload = async () => {
       enableCopyUriCheckbox.checked = defaults.copyUriEnabled
       replyCountSpinner.value = defaults.replyCount
       parentCountSpinner.value = defaults.parentCount
+      enableJetstreamCheckbox.checked = defaults.enableJetstream
       getPostThreadParams.style.display = getPostThreadCheckbox.checked ? 'block' : 'none'
       console.log('Settings reset to defaults')
     })
